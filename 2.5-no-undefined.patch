@@ -1,14 +1,3 @@
---- origsrc/agg-2.5/examples/aa_demo.cpp	2006-10-08 23:06:36.000000000 -0500
-+++ src/agg-2.5/examples/aa_demo.cpp	2008-05-11 15:20:48.234375000 -0500
-@@ -290,7 +290,7 @@
- };
- 
- 
--int agg_main(int argc, char* argv[])
-+int main(int argc, char* argv[])
- {
-     the_application app(agg::pix_format_bgr24, flip_y);
-     app.caption("AGG Example. Anti-Aliasing Demo");
 --- origsrc/agg-2.5/font_freetype/Makefile.am	2006-10-08 23:06:54.000000000 -0500
 +++ src/agg-2.5/font_freetype/Makefile.am	2008-05-11 15:08:02.609375000 -0500
 @@ -4,7 +4,8 @@
@@ -34,24 +23,6 @@
 -libaggplatformX11_la_LIBADD = -lX11
 +libaggplatformX11_la_LIBADD = $(top_builddir)/src/libagg.la -lX11
  endif
---- origsrc/agg-2.5/src/platform/X11/agg_platform_support.cpp	2007-07-07 19:35:40.000000000 -0500
-+++ src/agg-2.5/src/platform/X11/agg_platform_support.cpp	2008-05-11 15:24:25.734375000 -0500
-@@ -1288,6 +1288,7 @@
- }
- 
- 
-+#ifndef __CYGWIN__
- int agg_main(int argc, char* argv[]);
- 
- 
-@@ -1295,6 +1296,7 @@
- {
-     return agg_main(argc, argv);
- }
-+#endif
- 
- 
- 
 --- origsrc/agg-2.5/src/platform/sdl/Makefile.am	2006-10-08 23:07:25.000000000 -0500
 +++ src/agg-2.5/src/platform/sdl/Makefile.am	2008-05-11 15:10:46.578125000 -0500
 @@ -2,9 +2,9 @@
@@ -65,19 +36,4 @@
 -libaggplatformsdl_la_LIBADD = @SDL_LIBS@
 +libaggplatformsdl_la_LIBADD = $(top_builddir)/src/libagg.la @SDL_LIBS@
  endif
- 
---- origsrc/agg-2.5/src/platform/sdl/agg_platform_support.cpp	2006-10-08 23:07:25.000000000 -0500
-+++ src/agg-2.5/src/platform/sdl/agg_platform_support.cpp	2008-05-11 15:24:33.234375000 -0500
-@@ -705,10 +705,12 @@
- }
- 
- 
-+#ifndef __CYGWIN__
- int agg_main(int argc, char* argv[]);
- 
- int main(int argc, char* argv[])
- {
-     return agg_main(argc, argv);
- }
-+#endif
  
