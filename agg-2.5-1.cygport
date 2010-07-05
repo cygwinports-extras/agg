@@ -6,10 +6,19 @@ PATCH_URI="2.5-agg_main.patch
 
 DIFF_EXCLUDES="Makefile"
 
+PKG_NAMES="${PN} libagg2 libagg-devel"
+libagg2_CONTENTS="usr/bin/*-2.dll"
+libagg_devel_CONTENTS="usr/include/ usr/lib/ usr/share/"
+
+# required for agg_main.patch
 CPPFLAGS+=" -Dagg_main=main"
 # gpc is non-free
 CYGCONF_ARGS="
 	--enable-ctrl
 	--enable-freetype
 	--disable-gpc
+	--x-includes=/usr/include
+	--x-libraries=/usr/lib
 "
+
+DOCS="readme"
