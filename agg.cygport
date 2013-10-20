@@ -1,0 +1,54 @@
+NAME="agg"
+VERSION=2.5
+RELEASE=2
+CATEGORY="Libs"
+SUMMARY="Anti-Grain Geometry graphics rendering engine"
+DESCRIPTION="Anti-Grain Geometry (AGG) is an Open Source, free of charge
+graphic library, written in industrially standard C++. AGG doesn't depend
+on any graphic API or technology. Basically, you can think of AGG as of a
+rendering engine that produces pixel images in memory from some vectorial
+data. But of course, AGG can do much more than that."
+HOMEPAGE="http://www.antigrain.com/"
+#SRC_URI="http://www.antigrain.com/agg-${VERSION}.tar.gz"
+md5sum=6fa25317a3024a186d9a93d1513ca9fa
+SRC_URI="http://pkgs.fedoraproject.org/repo/pkgs/agg/agg-free-${VERSION}.tar.gz/${md5sum}/agg-free-${VERSION}.tar.gz"
+PATCH_URI="
+	fedora/agg-2.5-autotools.patch
+	fedora/agg-2.5-pkgconfig.patch
+	fedora/0001-Fix-non-terminating-loop-conditions-when-len-1.patch
+	fedora/0002-Cure-recursion-by-aborting-if-the-co-ordinates-are-t.patch
+	fedora/0003-Get-coordinates-from-previous-vertex-if-last-command.patch
+	fedora/0004-Make-rasterizer_outline_aa-ignore-close_polygon-when.patch
+	fedora/0005-Remove-VC-6-workaround.patch
+	fedora/0006-Implement-grain-merge-blending-mode-GIMP.patch
+	fedora/0007-Implement-grain-extract-blending-mode-GIMP.patch
+	fedora/0008-Declare-multiplication-and-division-operators-as-con.patch
+	fedora/0009-Add-a-static-identity-transformation.patch
+	fedora/0010-Add-renderer_scanline_aa_alpha.patch
+	fedora/0011-Avoid-division-by-zero-in-color-burn-mode.patch
+	fedora/0012-Avoid-pixel-artifacts-when-compositing.patch
+	fedora/0013-Modify-agg-conv-classes-to-allow-access-to-the-origi.patch
+	fedora/0014-Avoid-potential-zero-division-resulting-in-nan-in-ag.patch
+	fedora/0015-Ensure-first-value-in-the-gamma-table-is-always-zero.patch
+	2.5-agg_main.patch
+	2.5-no-undefined.patch
+"
+
+PKG_NAMES="libagg2 libagg-devel"
+libagg2_CONTENTS="usr/bin/*-2.dll"
+libagg_devel_CONTENTS="usr/include/ usr/lib/ usr/share/"
+
+DIFF_EXCLUDES="Makefile"
+
+# required for agg_main.patch
+CPPFLAGS+=" -Dagg_main=main"
+# gpc is non-free
+CYGCONF_ARGS="
+	--enable-ctrl
+	--enable-freetype
+	--disable-gpc
+	--x-includes=/usr/include
+	--x-libraries=/usr/lib
+"
+
+DOCS="readme"
